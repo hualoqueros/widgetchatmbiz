@@ -15,17 +15,21 @@ class ChatWidget {
         this.token              = options.token;
         this.auto_create        = options.auto_create || true;
         this.classWrapper       = document.getElementsByClassName("targetChat")[0];
+        this.receiverName       = "";
+        this.senderName         = "";
         
         if (this.pov=="buyer") {
             this.receiver_url   = "/detiltoko?tokoid=" + this.companySellerId;
+            this.receiverName   = this.sellerName;
         }else{
-            this.receiver_url   = "";
+            this.receiver_url   = "#";
+            this.receiverName   = this.sellerName;
         }
     }
 
     setHeader(){
-        var headerReceiverName          = document.getElementsByClassName('chat-seller-name')[0];
-        headerReceiverName.innerHTML    = this.sellerName;
+        var headerReceiverName          = document.getElementsByClassName('chat-receiver-name')[0];
+        headerReceiverName.innerHTML    = this.receiverName;
         headerReceiverName.href         = this.receiver_url;
     }
 
