@@ -1,0 +1,22 @@
+{
+  "name": "widgetchatmbiz",
+  "version": "1.0.0",
+  "description": "chat widget for mbi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hualoqueros/widgetchatmbiz.git"
+  },
+  "keywords": [
+    "widget"
+  ],
+  "author": "samudra.arenza@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hualoqueros/widgetchatmbiz/issues"
+  },
+  "homepage": "https://github.com/hualoqueros/widgetchatmbiz#readme"
+}
