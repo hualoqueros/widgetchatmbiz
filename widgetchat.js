@@ -87,6 +87,22 @@ class ChatWidget {
                 iframe.id           = 'chat-iframe-' + construct.companySellerId;
                 iframe.classList.add("chat-iframe");
                 iframe.style.display = "block";
+
+                // Append join button if is_participant == false
+                if (!data.is_participant) {
+                    var joinChatDiv = document.createElement("div");
+                    joinChatDiv.className = "chat-join_button";
+
+                    var joinChatButton = document.createElement("button");
+                    joinChatButton.className = "btn btn-primary btn-sm";
+                    joinChatButton.innerHTML = "Gabung ke Percakapan";
+
+                    // Insert joinChatButton into joinChatDiv
+                    joinChatDiv.appendChild(joinChatButton);
+
+                    // append joinChatDiv into .chat-room_chat
+                    selector.appendChild(joinChatDiv);
+                }
             },
             failure: function (errMsg) {
                 alert(errMsg)
