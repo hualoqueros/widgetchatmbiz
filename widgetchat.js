@@ -17,6 +17,7 @@ class ChatWidget {
         this.classWrapper       = document.getElementsByClassName("targetChat")[0];
         this.receiverName       = "";
         this.senderName         = "";
+        this.room_id            = this.target.getAttribute("data-room-id");
         
         if (this.pov=="buyer") {
             this.receiver_url   = "/detiltoko?tokoid=" + this.companySellerId;
@@ -37,7 +38,7 @@ class ChatWidget {
         var construct = this;
 
         // check is already rendered
-        var existingIframe = document.getElementById('chat-iframe-' + construct.companySellerId);
+        var existingIframe = document.getElementById('chat-iframe-' + construct.room_id);
         
         if ( existingIframe ) {
             var chatIframes =  document.getElementsByClassName("chat-iframe");
@@ -84,7 +85,7 @@ class ChatWidget {
                 var selector        = document.getElementsByClassName("chat-room_chat")[0];
                 var iframe          = selector.appendChild( document.createElement("iframe") );
                 iframe.src          = construct.widgetUrl + '&token=' + data.token;
-                iframe.id           = 'chat-iframe-' + construct.companySellerId;
+                iframe.id           = 'chat-iframe-' + construct.room_id;
                 iframe.classList.add("chat-iframe");
                 iframe.style.display = "block";
 
@@ -96,6 +97,11 @@ class ChatWidget {
                     var joinChatButton = document.createElement("button");
                     joinChatButton.className = "btn btn-primary btn-sm";
                     joinChatButton.innerHTML = "Gabung ke Percakapan";
+                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
+                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
+                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
+                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
+                    joinChatButton.setAttribute("data-room-id", construct.room_id);
 
                     // Insert joinChatButton into joinChatDiv
                     joinChatDiv.appendChild(joinChatButton);
