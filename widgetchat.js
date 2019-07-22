@@ -29,6 +29,10 @@ class ChatWidget {
         }
 
         this.wrapperIframe = "";
+
+        this.targetChatContractual = "";
+        var joinChatButton = document.createElement("button");
+        this.buttonJoin = joinChatButton;
         
     }
 
@@ -42,6 +46,7 @@ class ChatWidget {
             // creating wrapper
             var targetChat_contractual = document.createElement("div");
             targetChat_contractual.classList.add("targetChat_contractual");
+            this.targetChatContractual = targetChat_contractual;
             
             var chatRoom = document.createElement("div")
             chatRoom.classList.add("chat-room_chat");
@@ -177,8 +182,6 @@ class ChatWidget {
             
             if(status == 200) {
                 var data = JSON.parse(resp);
-                console.log("STATUS", status);
-                console.log("data ", data);
                 
                 var chatIframe =  document.createElement("iframe");
                 chatIframe.src = construct.widgetUrl + '&token=' + data.token;
@@ -193,83 +196,23 @@ class ChatWidget {
                     var joinChatDiv = document.createElement("div");
                     joinChatDiv.className = "chat-join_button";
 
-                    var joinChatButton = document.createElement("button");
-                    joinChatButton.className = "btn btn-primary btn-sm";
-                    joinChatButton.innerHTML = "Gabung ke Percakapan";
-                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
-                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
-                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
-                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
-                    joinChatButton.setAttribute("data-room-id", construct.room_id);
+                    
+                    construct.buttonJoin.className = "btn btn-primary btn-sm";
+                    construct.buttonJoin.innerHTML = "Gabung ke Percakapan";
+                    construct.buttonJoin.setAttribute("data-entity-id", construct.entity_id);
+                    construct.buttonJoin.setAttribute("data-entity-name", construct.entity_name);
+                    construct.buttonJoin.setAttribute("data-entity-id", construct.entity_id);
+                    construct.buttonJoin.setAttribute("data-entity-name", construct.entity_name);
+                    construct.buttonJoin.setAttribute("data-room-id", construct.room_id);
 
-                    // Insert joinChatButton into joinChatDiv
-                    joinChatDiv.appendChild(joinChatButton);
+                    // Insert buttonJoin into joinChatDiv
+                    joinChatDiv.appendChild(construct.buttonJoin);
 
                     // append joinChatDiv into .chat-room_chat
                     this.wrapperIframe.appendChild(joinChatDiv);
                 }
             }
         })
-
-
-        /*
-        $.ajax({
-            type: 'POST',
-            url:this.url,
-            headers: {
-                token: this.token
-            },
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType:"json",
-            success: function (data) {
-
-
-                var chatIframes =  document.getElementsByClassName("chat-iframe");
-                for(var i=0; i < chatIframes.length; i++){
-                    chatIframes[i].style.display = "none";
-                }
-                
-                var widget_params = {
-                    token: data.token,
-                    // product_name : $('.product-title').text(),
-                    // tier_prices: tp,
-                    // prod_img: prod_img,
-                    // prod_link: window.location.href
-                };
-                var selector        = document.getElementsByClassName("chat-room_chat")[0];
-                var iframe          = selector.appendChild( document.createElement("iframe") );
-                iframe.src          = construct.widgetUrl + '&token=' + data.token;
-                iframe.id           = 'chat-iframe-' + construct.room_id;
-                iframe.classList.add("chat-iframe");
-                iframe.style.display = "block";
-
-                // Append join button if is_participant == false
-                if (!data.is_participant) {
-                    var joinChatDiv = document.createElement("div");
-                    joinChatDiv.className = "chat-join_button";
-
-                    var joinChatButton = document.createElement("button");
-                    joinChatButton.className = "btn btn-primary btn-sm";
-                    joinChatButton.innerHTML = "Gabung ke Percakapan";
-                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
-                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
-                    joinChatButton.setAttribute("data-entity-id", construct.entity_id);
-                    joinChatButton.setAttribute("data-entity-name", construct.entity_name);
-                    joinChatButton.setAttribute("data-room-id", construct.room_id);
-
-                    // Insert joinChatButton into joinChatDiv
-                    joinChatDiv.appendChild(joinChatButton);
-
-                    // append joinChatDiv into .chat-room_chat
-                    selector.appendChild(joinChatDiv);
-                }
-            },
-            failure: function (errMsg) {
-                alert(errMsg)
-            }
-        });
-        */
     }
 
     generate() {
@@ -295,6 +238,21 @@ class ChatWidget {
         http.setRequestHeader("token",this.token);
         http.setRequestHeader("Content-Type","application/json");
         http.send(JSON.stringify(options.body));
+    }
+
+    show(){
+        this.targetChatContractual.style.display = "block";
+    }
+
+    hide(){
+        this.targetChatContractual.style.display = "none";
+    }
+
+    joinListener( callback ){
+        var construct = this;
+        this.buttonJoin.onclick = function(){
+            callback( construct.buttonJoin );
+        }
     }
 }
 
